@@ -40,12 +40,13 @@ class Math
    // Method with rectangles, the simplest function
    static simpleRectangleMethod(f, x, dx)
    {
-	  let iterations = parseInt(x/dx);
+      let iterations = parseInt(x/dx);    // Compute the number of iterations
+      let v0 = 0;                         // Initial velocity (by default 0)
       let result = 0;
 
       for(let i = 0;i < iterations; i++)
       {
-         result += dx * f(0, -9.81, i * dx);
+         result += dx * f(v0, -Physic.EARTH_ACC, i * dx);
       }
 
       return result;
@@ -54,14 +55,14 @@ class Math
    /*
    static middlePointMethod(func, x, h, n)
    {
-      let result = 0;
+   let result = 0;
 
-      for(let i = 0;i < n; i++)
-      {
-         result += h * func(0, -9.81, (2*i - h)/2);
-      }
+   for(let i = 0;i < n; i++)
+   {
+   result += h * func(0, -9.81, (2*i - h)/2);
+}
 
-      return result;
-   }
-   */
+return result;
+}
+*/
 }
