@@ -40,17 +40,18 @@ class Math
    // Method with rectangles, the simplest function
    static simpleRectangleMethod(f, x, dx)
    {
+	  let iterations = parseInt(x/dx);
       let result = 0;
-      let iterations = parseInt(x/dx);
 
       for(let i = 0;i < iterations; i++)
       {
-         result += dx * f(100, -9.81, i * dx);
+         result += dx * f(0, -9.81, i * dx);
       }
 
       return result;
    }
 
+   /*
    static middlePointMethod(func, x, h, n)
    {
       let result = 0;
@@ -62,4 +63,5 @@ class Math
 
       return result;
    }
+   */
 }
