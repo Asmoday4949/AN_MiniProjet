@@ -7,12 +7,12 @@
 
 class Shape
 {
-   constructor(x, y, penColor, bucketColor)
+   constructor(position, penColor, bucketColor, minCollision, maxCollision)
    {
-      this.x = x;
-      this.y = y;
+      this.position = position;
       this.penColor = penColor;
       this.bucketColor = bucketColor;
+      this.aabb = new AABB(minCollision, maxCollision);
    }
 
    getPenColor()
@@ -30,34 +30,49 @@ class Shape
       return this.bucketColor;
    }
 
+   getPos()
+   {
+      return this.position;
+   }
+
    setBucketColor(bucketColor)
    {
       this.bucketColor = bucketColor;
    }
 
-   setPos(x, y)
+   setPos(position)
    {
-      this.x = x;
-      this.y = y;
+      this.position = position;
    }
 
-   move(x, y)
+   move(moveVec)
    {
-      this.x += x;
-      this.y += y;
+      this.position.add(moveVec);
+   }
+
+   getAABB()
+   {
+      return this.aabb;
    }
 
    draw(context)
    {
-      // Nothing...
+      // Nothing
+      // Drawing is done in specialized classes
+   }
+
+   isColliding(shape)
+   {
+       // Test collision between this shape and an other passed in argument
+       return this.aabb.collide(this.aabb, shape.getAABB());
    }
 }
 
 class Square extends Shape
 {
-   constructor(x, y, penColor, bucketColor, sideSize)
+   constructor(position, penColor, bucketColor, sideSize)
    {
-      super(x, y, penColor, bucketColor);
+      super(position, penColor, bucketColor, new Vector2D(0, 0), new Vector2D(1, 1));
       this.sideSize = sideSize;
    }
 
@@ -66,13 +81,38 @@ class Square extends Shape
       context.strokeStyle = this.penColor;
       context.fillStyle = this.bucketColor;
 
-      context.translate(this.x, this.y);
+      context.translate(this.position.getX(), this.position.getY());
       context.rotate(0);
 
       context.fillRect(0, 0, this.sideSize, this.sideSize);
       context.strokeRect(0, 0, this.sideSize, this.sideSize);
 
       context.rotate(0);      // TODO : Undo the rotation
-      context.translate(-this.x, -this.y);
+      context.translate(-this.position.getX(), -this.position.getY());
    }
+}
+
+class HorizontalLine extends Shape
+{
+    constructor(position, penColor, bucketColor, length, width)
+    {
+        super(position, penColor, bucketColor, new Vector2D(0, 0), new Vector2D(1, 1));
+        this.width = width;
+        this.length = length;
+    }
+
+    draw(context)
+    {
+        context.strokeStyle = this.penColor;
+        context.fillStyle = this.bucketColor;
+
+        context.translate(this.position.getX(), this.position.getY());
+        context.rotate(0);
+
+        context.fillRect(0, 0, this.length, this.width);
+        context.strokeRect(0, 0, this.length, this.width);
+
+        context.rotate(0);      // TODO : Undo the rotation
+        context.translate(-this.position.getX(), -this.position.getY());
+    }
 }

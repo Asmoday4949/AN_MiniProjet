@@ -32,16 +32,31 @@ class Scene
 
       let timeFromStart = currentTimeMs - this.timeAtStart;
       let y = Math.simpleRectangleMethod(Physic.computeVelocity, timeFromStart / 1000, 0.001);
-      console.log("METER:" + y + " TIME:" + timeFromStart);
+
+	   //let collision = this.collide(shape);
 
       if(i == 0)
       {
-         shape.setPos(shape.x, y * this.PIXEL_TO_METER_FACTOR);
+         shape.getPos().setY(y * this.PIXEL_TO_METER_FACTOR);
       }
 
       shape.draw(this.context);
     }
 
     this.lastTimeMs = currentTimeMs;
+  }
+
+  collide(shape)
+  {
+	  let result = false;
+
+	  for(let i = 0;i < this.shapesList.length; i++)
+	  {
+		  let currentShape = this.shapesList[i];
+
+		  result = (currentShape != shape) && (shape.isColliding(currentShape));
+	  }
+
+	  return result;
   }
 }

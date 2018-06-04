@@ -35,8 +35,9 @@ function load()
 
     // Create a scene in which each shape are handled
     scene = new Scene(context);
-    scene.addShape(new Square(200, 0, 'black', 'red', 100));
-    scene.addShape(new Square(400, 0, 'blue', 'red', 50));
+    scene.addShape(new Square(new Vector2D(200, 0), 'black', 'red', 100));
+    scene.addShape(new Square(new Vector2D(400, 100), 'blue', 'red', 50));
+    scene.addShape(new HorizontalLine(new Vector2D(0, 400), 'black', 'black', graphicsCanvas.width, 3));
 
     // Add an event to update the scene every X ms
     window.setInterval(function()

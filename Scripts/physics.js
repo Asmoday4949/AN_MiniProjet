@@ -4,9 +4,44 @@
 * Description : This script can simulate the physic of a square under the gravity.
 */
 
-// AABB Box ?
-// AB Box ?
-// OBB
+class AABB
+{
+    constructor(min, max)
+    {
+        this.min = min;
+        this.max = max;
+    }
+
+    setMin(min)
+    {
+        this.min = min;
+    }
+
+    setMax(max)
+    {
+        this.max = max;
+    }
+
+    getMin()
+    {
+        return this.min;
+    }
+
+    getMax()
+    {
+        return this.max;
+    }
+
+    collide(a, b)
+    {
+        if(a.getMax().x < b.getMin().x || a.getMin().x > b.getMax().x) return false;
+        if(a.getMax().y < b.getMin().y || a.getMin().y > b.getMax().y) return false;
+
+        console.log("Collision");
+
+        return true;
+    }
+}
 
 class Physic
 {

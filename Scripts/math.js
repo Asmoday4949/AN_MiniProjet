@@ -22,6 +22,16 @@ class Vector2D
       return this.y;
    }
 
+   setX(x)
+   {
+      this.x = x;
+   }
+
+   setY(y)
+   {
+      this.y = y;
+   }
+
    // Add two vector2D and create a new Vector2D with the result
    add(vector2)
    {
