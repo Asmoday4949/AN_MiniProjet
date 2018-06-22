@@ -6,7 +6,7 @@ class Scene
         this.graphicsCanvas = graphicsCanvas;
         this.context = graphicsCanvas.getContext('2d');
 
-        this.ball = new Ball(100, 0, 50);
+        this.ball = new Ball(graphicsCanvas.width/2-25, 0, 50);
         this.vy = initalVelocity;
         this.gravity = gravity;
         this.restitutionFactor = restitutionFactor;
