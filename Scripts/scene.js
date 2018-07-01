@@ -21,6 +21,13 @@ class Scene
 		// Time between 2 calls of the update
         this.lastUpdateMs = Date.now();
         this.dt = 0;
+
+        // used for error correction
+        this.lastHeighestPos = 0;
+        this.epsilon = 1/16 * 10;
+
+        // Total time for plot
+        this.totTime = 0;
     }
 
 	// Update the ball
@@ -43,6 +50,24 @@ class Scene
             this.ball.setY(this.graphicsCanvas.height - this.ball.getHeight());
             this.vy *= -this.restitutionFactor;		// Velocity is in the opposite side (upward)
         }
+
+        // Check if this height has been already reached => correction
+        if(this.ball.getY() < this.lastHeighestPos && this.ball.getY() > this.graphicsCanvas.height)
+        {
+            this.ball.setY(this.lastHeighestPos + this.epsilon);
+            this.vy = 0;
+        }
+
+        // Get the height when velocity is 0
+        if(this.vy <= this.epsilon && this.vy >= -this.epsilon)
+        {
+            this.lastHeighestPos = this.ball.getY();
+        }
+    
+        // Specific to plot
+        Plotly.relayout("graph", 'xaxis.range', [0, this.totTime]);
+        Plotly.extendTraces("graph", {x: [[this.totTime]], y: [[this.graphicsCanvas.height-this.ball.getY()-this.ball.getHeight()]]}, [0]);
+        this.totTime += this.dt;
     }
 
 	// Reset the scene, restart the simulation
@@ -55,11 +80,54 @@ class Scene
 
         this.lastUpdateMs = Date.now();
         this.dt = 0;
+
+        this.lastHeighestPos = 0;
     }
 
 	// Clear the context
     clearCanvas()
     {
         this.context.clearRect(0, 0, this.graphicsCanvas.width, this.graphicsCanvas.height);
+    }
+
+    // Plot
+    displayPlot(divPlot)
+    {
+        let layout =
+        {    
+            width: 400,
+            height: 400,
+
+            xaxis:
+            {
+                title: "t [s]",
+                range: [0, 0],
+                autorange: false
+            },
+            yaxis:
+            {
+                title: "position [px]",
+                range: [0, this.graphicsCanvas.height],
+                autorange: false
+            },
+            hovermode: "closest"
+        };
+
+        let xData = [];
+        let yData = [];
+
+        let plot =
+        {
+            name: 'f(x)',
+            x: xData,
+            y: yData,
+            type: 'scatter'
+        };
+
+        let plotData = [];
+        plotData.push(plot);
+
+        Plotly.newPlot(divPlot, plotData, layout);
+        this.totTime = 0;
     }
 }

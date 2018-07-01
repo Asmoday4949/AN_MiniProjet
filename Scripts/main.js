@@ -29,6 +29,8 @@ window.onload = function()
 
     scene = new Scene(graphicsCanvas, 0, 9.81, 0.5);
 
+    scene.displayPlot("graph");
+
     // Add an event to update the scene every X ms
     intervalId = window.setInterval(function()
     {
@@ -36,7 +38,7 @@ window.onload = function()
       {
         scene.update();
       }
-    }, 1000/60);  // 60 fps
+    }, 1000/30);  // 60 fps
 }
 
 // Reset the scene, the simulation restart
@@ -51,6 +53,7 @@ function resetScene()
   graphicsCanvas.height = height;
 
   scene.reset(velocity, gravity, restitutionFactor);
+  scene.displayPlot("graph");
 }
 
 function updateGravity(gravity)
