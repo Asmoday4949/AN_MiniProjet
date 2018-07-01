@@ -28,7 +28,6 @@ window.onload = function()
     }
 
     scene = new Scene(graphicsCanvas, 0, 9.81, 0.5);
-
     scene.displayPlot("graph");
 
     // Add an event to update the scene every X ms
@@ -56,6 +55,7 @@ function resetScene()
   scene.displayPlot("graph");
 }
 
+// Update the textbox with predefined value of gravity
 function updateGravity(gravity)
 {
   document.getElementById("Gravity").value = gravity.toString();
