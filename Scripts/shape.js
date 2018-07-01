@@ -13,29 +13,26 @@ class Shape
        this.y = y;
        this.width = width;
        this.height = height;
-
-       console.log(this.x, this.y, this.width, this.height);
    }
 
    getX()
    {
-    return this.x;
+       return this.x;
    }
 
    setX(x)
    {
-    this.x = x;
+       this.x = x;
    }
 
    getY()
    {
-    return this.y;
+       return this.y;
    }
 
    setY(y)
    {
-    console.log(y);
-    this.y = y;
+       this.y = y;
    }
 
    getHeight()
@@ -50,28 +47,28 @@ class Shape
 
    getPenColor()
    {
-    return this.penColor;
+       return this.penColor;
    }
 
    setPenColor(penColor)
    {
-    this.penColor = penColor;
+       this.penColor = penColor;
    }
 
    getBucketColor()
    {
-    return this.bucketColor;
+       return this.bucketColor;
    }
 
    setBucketColor(bucketColor)
    {
-      this.bucketColor = bucketColor;
+       this.bucketColor = bucketColor;
    }
 
    move(x, y)
    {
-      this.x += x;
-      this.y += y;
+       this.x += x;
+       this.y += y;
    }
 
    moveY(y)
@@ -81,8 +78,8 @@ class Shape
 
    draw(context)
    {
-      // Nothing
-      // Drawing is done in specialized classes
+       // Nothing
+       // Drawing is done in specialized classes
    }
 }
 
@@ -96,10 +93,12 @@ class Ball extends Shape
     draw(context)
     {
         context.translate(this.x + this.width/2, this.y + this.width/2);
+		
         context.beginPath();
         context.arc(0, 0, this.width/2, 0, 2*Math.PI);
         context.stroke();
         context.closePath();
+		
         context.translate(-(this.x + this.width/2), -(this.y + this.width/2));
     }
 }

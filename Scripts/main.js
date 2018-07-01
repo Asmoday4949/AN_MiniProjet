@@ -36,9 +36,10 @@ window.onload = function()
       {
         scene.update();
       }
-    }, 1000/60);
+    }, 1000/60);  // 60 fps
 }
 
+// Reset the scene, the simulation restart
 function resetScene()
 {
   let height = parseFloat(document.getElementById("CanvasHeight").value);

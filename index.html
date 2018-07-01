@@ -5,70 +5,84 @@
     <title>Mini-Projet</title>
   </head>
   <body>
-    <h1>Mini-Projet d'algorithme numérique</h1>
-    <h2>Simulation de physique sur un carré</h2>
-    <p>Le but de ce travail est ...</p>
+	<h1>Mini-Projet d'algorithme numérique</h1>
+	<br>
+	Auteur: Malik Fleury
+	<br>
+	Classe: INF2 DLM-B
+	<br>
+	Date: 17.06.2018
+	<br>
+	<h2>Simulation - système de collision</h2>
 
-		<div id="MainArea">
-			<div id="Settings">
-				<label for="CanvasHeight">Hauteur du canvas:</label><br>
-				<input id="CanvasHeight" type="number" value="500">
-				<br>
-				<label for="InitialVelocity">Vitesse initiale:</label><br>
-				<input id="InitialVelocity" type="number" step="0.1" value="0">
-				<br>
-				<label for="RestitutionFactor">Coefficient de restitution:</label><br>
-				<input id="RestitutionFactor" type="number" step="0.1" value="0.5">
-				<br>
-				<label for="Gravity">Gravité:</label><br>
-				<input id="Gravity" type="number" step="0.01" value="9.81">
-				<br>
+	<div id="MainArea">
+		<div id="Settings">
+			<label for="CanvasHeight">Hauteur du canvas:</label><br>
+			<input id="CanvasHeight" type="number" value="500">
+			<br>
+			<label for="InitialVelocity">Vitesse initiale:</label><br>
+			<input id="InitialVelocity" type="number" step="0.1" value="0">
+			<br>
+			<label for="RestitutionFactor">Coefficient de restitution:</label><br>
+			<input id="RestitutionFactor" type="number" step="0.1" value="0.5">
+			<br>
+			<label for="Gravity">Gravité:</label><br>
+			<input id="Gravity" type="number" step="0.01" value="9.81">
+			<br>
 
-				<p>Gravité prédéfinie:</p>
-				<label for="Gravity_Earth">Terre</label>
-				<input type="radio" id="Gravity_Earth"
-				name="Gravity_Defaults" value="9.81" onclick="updateGravity(9.81)" checked>
-				<br>
-				<label for="Gravity_Moon">Lune</label>
-				<input type="radio" id="Gravity_Moon"
-				name="Gravity_Defaults" value="3.71" onclick="updateGravity(3.71)">
-				<br>
-				<label for="Gravity_Mars">Mars</label>
-				<input type="radio" id="Gravity_Mars"
-				name="Gravity_Defaults" value="1.62" onclick="updateGravity(1.62)">
-				<br><br>
-				<button type="button" onclick="resetScene()">Lancer la simulation</button>
-			</div>
-			<canvas id="GraphicsCanvas" width="500" height="500"/>
+			<p>Gravité prédéfinie:</p>
+			<label for="Gravity_Earth">Terre</label>
+			<input type="radio" id="Gravity_Earth"
+			name="Gravity_Defaults" value="9.81" onclick="updateGravity(9.81)" checked>
+			<br>
+			<label for="Gravity_Moon">Lune</label>
+			<input type="radio" id="Gravity_Moon"
+			name="Gravity_Defaults" value="3.71" onclick="updateGravity(3.71)">
+			<br>
+			<label for="Gravity_Mars">Mars</label>
+			<input type="radio" id="Gravity_Mars"
+			name="Gravity_Defaults" value="1.62" onclick="updateGravity(1.62)">
+			<br><br>
+			<button type="button" onclick="resetScene()">Lancer la simulation</button>
 		</div>
+		<canvas id="GraphicsCanvas" width="500" height="500"/>
+	</div>
 
-		<style>
+	<style>
 
-		#MainArea
-		{
-			display: flex;
-			flex-direction: row;
-			margin-left: auto;
-			margin-right: auto;
-			width: 50%;
-		}
+	#MainArea
+	{
+		display: flex;
+		flex-direction: row;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+	}
 
-		#GraphicsCanvas
-		{
-			order: 2;
-			border: 1px solid blue;
-			margin: 50px auto;
-		}
+	#GraphicsCanvas
+	{
+		order: 2;
+		border: 1px solid blue;
+		margin: 50px auto;
+	}
 
-		#Settings
-		{
-			order: 1;
-			margin: 50px auto;
-		}
-		</style>
+	#Settings
+	{
+		order: 1;
+		margin: 50px auto;
+	}
+	</style>
 
-		<script src="Scripts/shape.js"></script>
-		<script src="Scripts/scene.js"></script>
-		<script src="Scripts/main.js"></script>
+	<br>
+	<h2>Références</h2>
+	<ul>
+		<li>Chute libre: <a href="https://en.wikipedia.org/wiki/Free_fall">https://en.wikipedia.org/wiki/Free_fall</a></li>
+		<li>Coefficient de restitution: <a href="https://en.wikipedia.org/wiki/Coefficient_of_restitution">https://en.wikipedia.org/wiki/Coefficient_of_restitution</a></li>
+		<li>Intégration: <a href="http://www.stephane-gobron.net">http://www.stephane-gobron.net</a></li>
+	</ul>
+
+	<script src="Scripts/shape.js"></script>
+	<script src="Scripts/scene.js"></script>
+	<script src="Scripts/main.js"></script>
   </body>
 </html>
