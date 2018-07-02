@@ -6,7 +6,7 @@
 
 class Scene
 {
-    constructor(graphicsCanvas, initalVelocity, gravity, restitutionFactor)
+    constructor(graphicsCanvas, initalVelocity, gravity, restitutionFactor, divPlot = "graph")
     {
 		// Stores the canvas HTML5 and the context for drawing
         this.graphicsCanvas = graphicsCanvas;
@@ -22,12 +22,13 @@ class Scene
         this.lastUpdateMs = Date.now();
         this.dt = 0;
 
-        // used for error correction
+        // Used for error correction
         this.lastHeighestPos = 0;
-        this.epsilon = 1/16 * 10;
+        this.epsilon = 0.1;
 
-        // Total time for plot
+        // Plot
         this.totTime = 0;
+        this.divPlot = divPlot;
     }
 
 	// Update the ball
@@ -52,22 +53,27 @@ class Scene
         }
 
         // Check if this height has been already reached => correction
-        if(this.ball.getY() < this.lastHeighestPos && this.ball.getY() > this.graphicsCanvas.height)
+        if(this.ball.getY() < this.lastHeighestPos )
         {
-            this.ball.setY(this.lastHeighestPos + this.epsilon);
+            //&& this.ball.getY() < this.graphicsCanvas.height
+            this.ball.setY(this.lastHeighestPos);
             this.vy = 0;
         }
 
         // Get the height when velocity is 0
-        if(this.vy <= this.epsilon && this.vy >= -this.epsilon)
+        if(equals(this.vy, 0, 10/16))
         {
             this.lastHeighestPos = this.ball.getY();
         }
     
-        // Specific to plot
-        Plotly.relayout("graph", 'xaxis.range', [0, this.totTime]);
-        Plotly.extendTraces("graph", {x: [[this.totTime]], y: [[this.graphicsCanvas.height-this.ball.getY()-this.ball.getHeight()]]}, [0]);
-        this.totTime += this.dt;
+        // Can enable or disable the plot, it can slow the simulation if enabled
+        if(this.enabledPlot)
+        {
+            // Add data to trace
+            Plotly.relayout(this.divPlot, 'xaxis.range', [0, this.totTime]);
+            Plotly.extendTraces(this.divPlot, {x: [[this.totTime]], y: [[this.graphicsCanvas.height-this.ball.getY()-this.ball.getHeight()]]}, [0]);
+            this.totTime += this.dt;
+        }
     }
 
 	// Reset the scene, restart the simulation
@@ -82,6 +88,9 @@ class Scene
         this.dt = 0;
 
         this.lastHeighestPos = 0;
+
+        this.enabledPlot = false;
+        Plotly.purge(this.divPlot);
     }
 
 	// Clear the context
@@ -91,7 +100,7 @@ class Scene
     }
 
     // Plot
-    displayPlot(divPlot)
+    displayPlot()
     {
         let layout =
         {    
@@ -127,7 +136,9 @@ class Scene
         let plotData = [];
         plotData.push(plot);
 
-        Plotly.newPlot(divPlot, plotData, layout);
+        Plotly.newPlot(this.divPlot, plotData, layout);
         this.totTime = 0;
+
+        this.enabledPlot = true;
     }
 }
